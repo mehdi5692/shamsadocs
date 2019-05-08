@@ -1,76 +1,75 @@
 body
     div(ng-controller="addsendCtrl")
-        .st_title
-            div(class="panel {{comment_style}}" ng-hide="sh_panel")
-                .panel-heading
-                    |{{comment}}
-                div(class="panel-wrapper collapse in", aria-expanded="true")
-                    .panel-body
-                        .col-lg-12
-                            .col-xs-1
-                                label(for="typ1") تحویل گیرنده :
-                            .col-xs-2
-                                select(class="form-control", ng-model="person")
-                                    option(disabled, selected) لطفا یک فرد را انتخاب نمایید .
-                                    option(ng-repeat="i in person_data " value="{{i.ID}}") {{i.FIRSTNAME}} {{i.LASTNAME}}
-                            .col-xs-3
-                                label(for="date1") تاریخ تحویل :
-                            .col-xs-2
-                                    input(type="text", class="form-control", id="date1" ng-model="date2", datepicker-popup-persian="{{format}}", name="date1",
-                                    is-open="persianIsOpen1", datepicker-options="dateOptions", date-disabled="disabled(date, mode)", ng-required="true",
-                                    close-text="بسته", clear-text="پاک کردن", current-text="امروز", ng-click="openPersian1($event)", value="{{date2}}")
-
-                            .col-xs-2
-                                button(class="btn btn-success btn-rounded btn-outline", ng-click="add_send(person, date2);") ثبت
-
-
-            div(class="panel panel-success" ng-show="sh_panel")
-                .panel-heading
-                    | {{comment1}}
-                div(class="panel-wrapper collapse in", aria-expanded="true")
-                    .panel-body
-                        .col-lg-12
-                            .col-xs-2
-                                | کد ثبت تحویل گیرنده :
-                            .col-xs-2
-                                | {{send_ID.ID}}
-                            .col-xs-2
-                                | نام تحویل گیرنده :
-                            .col-xs-2
-                                | {{send_ID.FIRSTNAME}} {{send_ID.LASTNAME}}
-                            .col-xs-2
-                                | تاریخ تحویل اسناد :
-                            .col-xs-2
-                                | {{send_ID.SEND_DATE | jalaliDate2:'jYYYY/jM/jD'}}
-
-
-
-            div(class="panel panel-info" ng-show="sh_panel")
-                .panel-heading
-                    | {{comment2}}
+        div(class="panel {{comment_style}} st_title" ng-hide="sh_panel")
+            .panel-heading
+                | {{comment}}
+            div(class="panel-wrapper collapse in", aria-expanded="true")
                 .panel-body
-                    div(class="row")
-                        .col-sm-2
-                            | بارکد سند :
-                        .col-sm-3
-                            input(type="text" id="doc_code" class="form-control" ng-enter="add_send_doc(send_ID.ID,doc_code)")
-                    br
-                    div(class="row")
-                        table(ng-table="tableParams_send", class="table")
-                            tbody(ng-repeat="p in $data")
-                                tr(ng-class-odd="'odd'", ng-class-even="'even'")
-                                    td(title="'بارکد سند'" filter="{ DOC_ID: 'text'}" sortable="'DOC_ID'")
-                                        | {{p.DOC_ID }}
-                                    td(title="'شماره ثبت'" filter="{ DOC_NUM: 'text'}" sortable="'DOC_NUM'")
-                                        | {{p.DOC_NUM}}
-                                    td(title="'تاریخ ثبت'" filter="{ TDN_DATE: 'text'}" sortable="'TDN_DATE'")
-                                        | {{p.TDN_DATE | jalaliDate2:'jYYYY/jM/jD'}}
-                                    td(title="'وضعیت سند'" filter="{ TDN_ACT: 'text'}" sortable="'TDN_ACT'")
-                                        | {{p.TDN_ACT | act}}
-                                    td(title="'تحویل گیرنده'" filter="{ FULLNAME: 'text'}" sortable="'FULLNAME'")
-                                        | {{p.FULLNAME}}
+                    .col-lg-12
+                        .col-xs-1
+                            label(for="typ1") تحویل گیرنده :
+                        .col-xs-2
+                            select(class="form-control", ng-model="person")
+                                option(disabled, selected) لطفا یک فرد را انتخاب نمایید .
+                                option(ng-repeat="i in person_data " value="{{i.ID}}") {{i.FIRSTNAME}} {{i.LASTNAME}}
+                        .col-xs-3
+                            label(for="date1") تاریخ تحویل :
+                        .col-xs-2
+                            input(type="text", class="form-control", id="date1" ng-model="date2", datepicker-popup-persian="{{format}}", name="date1",
+                                is-open="persianIsOpen1", datepicker-options="dateOptions", date-disabled="disabled(date, mode)", ng-required="true",
+                                close-text="بسته", clear-text="پاک کردن", current-text="امروز", ng-click="openPersian1($event)", value="{{date2}}")
 
-                    div(class="row pull-right")
-                        a(href="#/send", class="btn btn-success btn-rounded btn-outline")
-                            |  اتمام
+                        .col-xs-2
+                            button(class="btn btn-success btn-rounded btn-outline", ng-click="add_send(person, date2);") ثبت
+
+
+        div(class="panel panel-success st_title" ng-show="sh_panel")
+            .panel-heading
+                | {{comment1}}
+            div(class="panel-wrapper collapse in", aria-expanded="true")
+                .panel-body
+                    .col-lg-12
+                        .col-xs-2
+                            | کد ثبت تحویل گیرنده :
+                        .col-xs-2
+                            | {{send_ID.ID}}
+                        .col-xs-2
+                            | نام تحویل گیرنده :
+                        .col-xs-2
+                            | {{send_ID.FIRSTNAME}} {{send_ID.LASTNAME}}
+                        .col-xs-2
+                            | تاریخ تحویل اسناد :
+                        .col-xs-2
+                            | {{send_ID.SEND_DATE | jalaliDate2:'jYYYY/jM/jD'}}
+
+
+
+        div(class="panel panel-info" ng-show="sh_panel")
+            .panel-heading
+                | {{comment2}}
+            .panel-body
+                div(class="row")
+                    div(class="col-sm-2 st_title")
+                        | بارکد سند :
+                    .col-sm-3
+                        input(type="text" id="doc_code" class="form-control" ng-enter="add_send_doc(send_ID.ID,doc_code)")
+                br
+                div(class="row")
+                    table(ng-table="tableParams_send", class="table st_title")
+                        tbody(ng-repeat="p in $data")
+                            tr(ng-class-odd="'odd'", ng-class-even="'even'")
+                                td(title="'بارکد سند'" filter="{ DOC_ID: 'text'}" sortable="'DOC_ID'")
+                                    | {{p.DOC_ID }}
+                                td(title="'شماره ثبت'" filter="{ DOC_NUM: 'text'}" sortable="'DOC_NUM'")
+                                    | {{p.DOC_NUM}}
+                                td(title="'تاریخ ثبت'" filter="{ TDN_DATE: 'text'}" sortable="'TDN_DATE'")
+                                    | {{p.TDN_DATE | jalaliDate2:'jYYYY/jM/jD'}}
+                                td(title="'وضعیت سند'" filter="{ TDN_ACT: 'text'}" sortable="'TDN_ACT'")
+                                    | {{p.TDN_ACT | act}}
+                                td(title="'تحویل گیرنده'" filter="{ FULLNAME: 'text'}" sortable="'FULLNAME'")
+                                    | {{p.FULLNAME}}
+
+                div(class="row pull-right")
+                    a(href="#/send", class="btn btn-success btn-rounded btn-outline")
+                        |  اتمام
 
