@@ -1,0 +1,99 @@
+body
+    div(ng-controller="commCtrl")
+        div(class="panel panel-danger")
+            div(class="panel-heading st_title")
+                | {{comment}}
+                //.pull-right
+                //    a(tooltip="جدید", class="ng-binding", alt="default", data-toggle="modal", data-target=".bs-example-modal-lg", class="model_img img-responsive", ng-click="kala_load(p.GDG_UID);")
+                //        i(class="fa fa-plus fa-fw")
+            .panel-body
+                div(class="row")
+                    div(class="col-sm-1 st_title")
+                        | بارکد :
+                    .col-sm-2
+                        input(type="text" class="form-control" id="doc_id1" ng-model="doc_id" ng-change="doc_num_chenge()" ng-enter="add_doc(doc_id, doc_num)")
+                    div(class="col-sm-1 st_title" )
+                        | شماره ثبت :
+                    .col-sm-2
+                        input(type="text" class="form-control" ng-model="doc_num" disabled)
+                    div(class="col-sm-2 st_title")
+                        | تاریخ ثبت :
+                    .col-sm-3
+                        input(type="text", class="form-control st_con", id="date1", disabled, value="{{date2| jalaliDate2:'jYYYY/jM/jD'}}")
+
+                br
+                div(class="row")
+                    table(ng-table="tableParams", class="table st_title")
+                        tbody(ng-repeat="p in $data")
+                            tr(ng-class-odd="'odd'", ng-class-even="'even'")
+                                td(title="'بارکد'" filter="{ ID: 'text'}" sortable="'ID'")
+                                    | {{p.ID }}
+                                td(title="'شماره ثبت'" filter="{ DOC_NUM: 'text'}" sortable="'DOC_NUM'")
+                                    | {{p.DOC_NUM }}
+                                td(title="'تاریخ ثبت'" filter="{ DOC_DATE: 'text'}" sortable="'DOC_DATE'")
+                                    | {{p.DOC_DATE | jalaliDate2:'jYYYY/jM/jD'}}
+                                td(title="'وضعیت سند'" filter="{ DOC_ACT: 'text'}" sortable="'DOC_ACT'")
+                                    | {{p.DOC_ACT | act}}
+                                td(title="'تحویل گیرنده'" filter="{ FULLNAME: 'text'}" sortable="'FULLNAME'")
+                                    | {{p.FULLNAME}}
+
+                            //td
+                            //    span(class="text-extra-large margin-bottom-10 block")
+                            //        a(tooltip="مشاهده", class="ng-binding", alt="default", data-toggle="modal", data-target=".bs-example-modal-lg", class="model_img img-responsive", ng-click="kala_load(p.GDG_UID);")
+                            //            i(class="fa fa-bars fa-fw st_text_green")
+
+
+
+
+
+    div(class="modal fade bs-example-modal-lg", tabindex="-1", role="dialog", aria-labelledby="myLargeModalLabel", aria-hidden="true", style="display: none;")
+            div(class="modal-dialog modal-lg")
+                div(class="modal-content")
+                    div(class="modal-header")
+                        button(type="button", class="close", data-dismiss="modal", style="float : left", aria-hidden="true")
+                            i(class="fa fa-times fa-fw")
+                        h4(class="modal-title st_title", id="myLargeModalLabel")
+                            |ثبت سند جدید
+                    div(class="modal-body st-con")
+                        div(class="col-sm-2 st_con")
+                            |بارکد :
+                        .col-sm-2
+                            input(type="text" class="form-control" ng-model="doc_id" ng-change="doc_num_chenge()")
+                        div(class="col-sm-2 st_con" )
+                            |شماره ثبت :
+                        .col-sm-2
+                            input(type="text" class="form-control" ng-model="doc_num")
+                        div(class="col-sm-2 st_con")
+                            |تاریخ ثبت :
+                        .col-sm-2
+                            input(type="text", class="form-control", id="date1" ng-model="date2", datepicker-popup-persian="{{format}}", name="date1",
+                                is-open="persianIsOpen1", datepicker-options="dateOptions", date-disabled="disabled(date, mode)", ng-required="true",
+                                close-text="بسته", clear-text="پاک کردن", current-text="امروز", ng-click="openPersian1($event)", value="{{date2}}")
+
+
+
+
+
+                    //    table(ng-table="tableParams1", class="table st_con")
+                    //        tbody(ng-repeat="p1 in $data")
+                    //            tr(ng-class-odd="'odd'", ng-class-even="'even'")
+                    //                td(title="'کد کالا'" filter="{ GDS_CODE: 'text'}" sortable="'GDS_CODE'")
+                    //                    | {{p1.GDS_CODE }}
+                    //                td(title="'نام فارسی کالا'" filter="{ GDS_NAME_FA: 'text'}" sortable="'GDS_NAME_FA'")
+                    //                    | {{p1.GDS_NAME_FA}}
+                    //                td(title="'نام عربی کالا'" filter="{ GDS_NAME_AR: 'text'}" sortable="'GDS_NAME_AR'")
+                    //                    | {{p1.GDS_NAME_AR}}
+                    //                td(title="'نسبت'" filter="{ GDS_RATIO_TO_MAIN_UNIT: 'text'}" sortable="'GDS_RATIO_TO_MAIN_UNIT'")
+                    //                    | {{p1.GDS_RATIO_TO_MAIN_UNIT | number:3}}
+                    //                td(title="'واحد اندازه گیری به فارسی'" filter="{ GDU_NAME_FA: 'text'}" sortable="'GDU_NAME_FA'")
+                    //                    | {{p1.GDU_NAME_FA}}
+                    //                td(title="'واحد اندازه گیری به عربی'" filter="{ GDU_NAME_AR: 'text'}" sortable="'GDU_NAME_AR'")
+                    //                    | {{p1.GDU_NAME_AR}}
+                    div(class="modal-footer")
+                        button(type="button", class="btn btn-info waves-effect", data-dismiss="modal" ng-click="add_doc(doc_id, doc_num, date2);")
+                            |ثبت سند
+
+                        button(type="button", class="btn btn-danger waves-effect", data-dismiss="modal")
+                            | انصراف
+
+

@@ -1,0 +1,170 @@
+extends layout
+
+block content
+    body(ng-app="docsApp")
+        .preloader
+            .cssload-speeding-wheel
+
+        div(id="wrapper")
+            // Top Navigation
+            nav(class="navbar navbar-default navbar-static-top m-b-0")
+                div(class="navbar-header")
+                    a(class="navbar-toggle hidden-sm hidden-md hidden-lg ", href="javascript:void(0)", data-toggle="collapse", data-target=".navbar-collapse")
+                        i(class="ti-menu")
+                    div(class="top-left-part")
+                        a(class="logo", href="/home")
+                            b
+                                img(src="/images/logo01.png", height="50", alt="home")
+                            span(class="hidden-xs")
+                                strong
+                                    | SHAMSA
+                                | Docs
+
+                    ul(class="nav navbar-top-links navbar-right hidden-xs")
+                        li
+                            a(href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light")
+                                i(class="icon-arrow-right-circle ti-menu")
+                        li
+                            form(role="search", class="app-search hidden-xs")
+                                input(type="text", placeholder="جستجو ...", class="form-control st_con")
+                                a(href="")
+                                    i(class="fa fa-search")
+
+                    ul(class="nav navbar-top-links navbar-right pull-left")
+                        li(class="dropdown")
+                            a(class="st_con dropdown-toggle profile-pic" data-toggle="dropdown")
+                                b(class="hidden-xs")
+                                    | #{usertitle}
+                            ul(class="dropdown-menu dropdown-user animated flipInY")
+                                li
+                                    a(href="#")
+                                        |ناحیه کاربری
+                                        i(class="ti-user" style="margin:10px")
+                                li
+                                    a(href="../logout")
+                                        |خروج کاربر
+                                        i(class="fa fa-power-off" style="margin:10px")
+
+                        li(class="right-side-toggle")
+                            a(class="waves-effect waves-light", href="javascript:void(0)")
+                                i(class="fa fa-spin fa-cog")
+
+            //Left navbar-header
+            div(class="navbar-default sidebar", role="navigation")
+                div(class="sidebar-nav navbar-collapse slimscrollsidebar")
+                    ul(class="nav", id="side-menu")
+                        li(class="nav-small-cap m-t-10 st_menu")
+                            | -- منوی اصلی
+                        li
+                            a(href="#/index", class="waves-effect")
+                                i(class="icon-home")
+                                span(class="hide-menu st_con")
+                                    |     صفحه اصلی
+                        li
+                            a(href="#/docs", class="waves-effect")
+                                i(class="icon-docs")
+                                span(class="hide-menu st_con")
+                                    |     لیست اسناد
+                        li
+                            a(href="#/person", class="waves-effect")
+                                i(class="icon-people")
+                                span(class="hide-menu st_con")
+                                    |     لیست افراد
+                        li
+                            a(href="#/addsend", class="waves-effect")
+                                i(class="icon-bag")
+                                span(class="hide-menu st_con")
+                                    |    ثبت تحویل اسناد
+                        li
+                            a(href="#/send", class="waves-effect")
+                                i(class="icon-bag")
+                                span(class="hide-menu st_con")
+                                    |    اطلاعات تحویل اسناد
+                        li
+                            a(href="#/addrecive", class="waves-effect")
+                                i(class="icon-bag")
+                                span(class="hide-menu st_con")
+                                    |    ثبت دریافت اسناد
+                        li
+                            a(href="#/recive", class="waves-effect")
+                                i(class="icon-drawar")
+                                span(class="hide-menu st_con")
+                                    |     اطلاعات دریافت اسناد
+
+
+
+
+            //Page Content
+            div(id="page-wrapper")
+                .container-fluid
+                    div(class="row bg-title")
+                        div(class="col-lg-3 col-md-4 col-sm-4 col-xs-12")
+
+                    div(class="row")
+                        div(class="col-lg-12 col-md-12 col-sm-12 col-xs-12")
+                            div(ui-view)
+
+
+                    //right-sidebar
+                    .right-sidebar
+                        .slimscrollright
+                            .rpanel-title
+                                | منوی تنظیمات
+                                span
+                                    i(class="ti-close right-side-toggle")
+                            .r-panel-body
+                                ul(class="st_con")
+                                    li(class="st_title")
+                                        b تنظیمات صفحه
+                                    li
+                                        div(class="checkbox checkbox-info")
+                                            input(id="checkbox1", type="checkbox", class="fxhdr")
+                                            label(for="checkbox1") ثابت کردن نوار بالا
+
+                                    li
+                                        div(class="checkbox checkbox-warning")
+                                            input(id="checkbox2", type="checkbox", checked="", class="fxhdr")
+                                            label(for="checkbox2") ثابت کردن منوی سمت چپ
+
+                                    li
+                                        div(class="checkbox checkbox-success")
+                                            input(id="checkbox4", type="checkbox", class="open-close")
+                                            label(for="checkbox4") تغییر حالت منوی سمت چپ
+
+                                ul(id="themecolors", class="m-t-20 st_con")
+                                    li(class="st_title")
+                                        b
+                                            | رنگ  بندی منوی سفید
+                                    li
+                                        a(href="javascript:void(0)", data-theme="default", class="default-theme")
+                                            | 1
+                                    li
+                                        a(href="javascript:void(0)", data-theme="green" class="green-theme") 2
+                                    li
+                                        a(href="javascript:void(0)", data-theme="gray" class="yellow-theme") 3
+                                    li
+                                        a(href="javascript:void(0)", data-theme="blue" class="blue-theme") 4
+                                    li
+                                        a(href="javascript:void(0)", data-theme="purple" class="purple-theme") 5
+                                    li
+                                        a(href="javascript:void(0)", data-theme="megna" class="megna-theme working") 6
+                                    li(class="st_title")
+                                        b
+                                            | رنگ  بندی منوی طوسی
+                                    br
+                                    li
+                                        a(href="javascript:void(0)", data-theme="default-dark" class="default-dark-theme") 7
+                                    li
+                                        a(href="javascript:void(0)", data-theme="green-dark" class="green-dark-theme") 8
+                                    li
+                                        a(href="javascript:void(0)", data-theme="gray-dark" class="yellow-dark-theme") 9
+                                    li
+                                        a(href="javascript:void(0)", data-theme="blue-dark" class="blue-dark-theme") 10
+                                    li
+                                        a(href="javascript:void(0)", data-theme="purple-dark" class="purple-dark-theme") 11
+                                    li
+                                        a(href="javascript:void(0)", data-theme="megna-dark" class="megna-dark-theme") 12
+
+
+
+

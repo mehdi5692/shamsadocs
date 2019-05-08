@@ -1,0 +1,32 @@
+doctype
+
+html
+  head
+    title= title
+    meta(charset="utf-8")
+    link(rel="stylesheet prefetch", href="http://fonts.googleapis.com/css?family=Open+Sans:600")
+    link(rel="stylesheet", href="/stylesheets/index/main.css")
+    link(rel="stylesheet", href="/stylesheets/index/defult.css")
+  body
+    .login-wrap
+      .login-html
+        .st_titr
+          | شرکت شمسا
+          br
+          |ورود به سامانه ثبت اسناد مالی
+
+        .st_danger
+          | #{alrt1}
+        form(action="#", method="post")
+          .login-form
+            .group
+              label(for="user", class="label st_con2") نام کاربری
+              input(id="user", name="username", type="text", class="input")
+            .group
+              label(for="pass", class="label st_con2") گذرواژه
+              input(id="pass", name="userpass" type="password", class="input", data-type="password")
+            .group
+              input(type="submit" class="button st_con2" value="ورود")
+            .hr
+            .foot-lnk
+              a(class="st_con2", href="http://www.shamsa.ir") وب سایت شرکت شمسا

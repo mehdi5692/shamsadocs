@@ -1,0 +1,107 @@
+/*******************************************************************************
+ *              bootstrap-rtl (version 3.3.4)
+ *      Author: Morteza Ansarinia (http://github.com/morteza)
+ *  Created on: August 13,2015
+ *     Project: bootstrap-rtl
+ *   Copyright: Unlicensed Public Domain
+ *******************************************************************************/
+.st_titr {font-family: "B titr", tahoma;font-size: 16pt; text-align:center;}
+.st_titr2 {font-family: "B titr", tahoma;font-size: 18pt; text-align:center;}
+.st_titr3 {font-family: "B titr", tahoma;font-size: 60pt; text-align:center;}
+.st_titr4 {font-family: "B titr", tahoma;font-size: 40pt; text-align:center;}
+.st_boild {font-family: "B titr", tahoma;font-size: 16pt; }
+.st_boild2 {font-family: "B titr", tahoma;font-size: 16pt; text-align: center; }
+.st_menu {font-family: "B Nazanin", tahoma;font-size: 80%; text-align:center; font-weight:bold;}
+.st_title {font-family: "B Nazanin", tahoma;font-size: 14pt; font-weight:bold;}
+.st_title2 {font-family: "B Nazanin", tahoma;font-size: 18pt; font-weight:bold;}
+.st_con {font-family: "B Nazanin", tahoma;font-size: 12pt; }
+.st_con2 {font-family: "B Nazanin", tahoma;font-size: 16pt; font-weight: bold; }
+.st_tible {font-family: "B Nazanin", tahoma;font-size: 12pt; text-align:center;}
+.st_head {font-family: "B Nazanin", tahoma;font-size: 12pt; text-align:center; font-weight:bold;}
+.st_head2 {font-family: "B Nazanin", tahoma; font-size: 12pt; font-weight: bold;}
+.st_danger2 {font-family: "B Nazanin", tahoma;font-size: 14pt; font-weight:bold; color: #a94442;}
+.st_modal_lg {width: 80%;}
+.st_modal_nm {width: 60%;}
+.st_modal_nm2 {width: 50%;}
+.st_modal_sm {width: 40%;}
+.st_modal_xs {width: 35%;}
+.st_modal_xs2 {width: 25%;}
+.st_danger {background-color: #d9534f;}
+.st_warning {background-color: #f0ad4e;}
+.st_info {background-color: #5bc0de;}
+.st_primary {background-color: #337ab7;}
+.st_success {background-color: #5cb85c;}
+.st_green {background-color: #1FBBA6 }
+.st_text_red {color: #d53342;}
+.st_text_red2 {color: #d53342;}
+.st_text_red3 {color: #9e2420;}
+.st_text_green {color: #1FBBA6;}
+.st_gold {background-color: #d9c8a0;}
+.st_error {background-color: #ff5a56;}
+.st_back1 {background-color: #cd8eff;}
+.st_back2 {background-color: #f6d9ff; color: #000000;}
+.st_back3 {background-color: #eff0bf; color: #000000;}
+.st_back4 {background-color: #b6dade; color: #000000;}
+.st_left {direction: ltr; left: auto}
+.st_right {direction: rtl; right: auto}
+.st_size_big {font-size: 60pt; font-weight: bolder}
+.st_logo {margin: -50px auto;}
+.st_icone{
+
+}
+.st_icone a{
+    color: inherit;
+    padding: 0 0.5em 0 0.5em ;
+}
+
+
+.angular-google-map-container { height: 347px;}
+.gm-style {
+    font-family:Tahoma, Roboto, Arial, sans-serif;
+    font-weight: bold;
+    font-size:12px;
+    font-weight:400;
+    text-decoration:none
+}
+
+    @media print {
+       *{
+          color: #000;
+          background: #fff;
+       }
+       #menu0, #serches, #am_title, #am_coment, .btn, .dont-print{
+          display: none;
+       }
+       .st_body {width: 100%}
+       .col-md-9 {width: 100%}
+    }
+
+.cs-select2 > span:after {
+    right: auto;
+    left: 1em;
+}
+.cs-skin-elastic > span::after {
+    font-family: 'themify';
+    content: '\e64b';
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    color: #007AFF;
+}
+
+.cs-select2 {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    text-align: right;
+    background: #fff;
+    z-index: 100;
+    font-size: 100%;
+    width: 100%;
+    max-width: 1500px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

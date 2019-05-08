@@ -1,0 +1,54 @@
+body
+    div(ng-controller="commCtrl")
+        .st_title
+            div(class="panel panel-danger")
+                .panel-heading
+                    |{{comment}}
+                .panel-body
+                    table(ng-table="tableParams", class="table")
+                        tbody(ng-repeat="p in $data")
+                            tr(ng-class-odd="'odd'", ng-class-even="'even'")
+                                td(title="'نام کالا'" filter="{ GDG_NAME_FA: 'text'}" sortable="'GDG_NAME_FA'")
+                                    |{{p.GDG_NAME_FA }}
+                                td(title="'واحد اندازه گیری به فارسی'" filter="{ GDU_NAME_FA: 'text'}" sortable="'GDU_NAME_FA'")
+                                    | {{p.GDU_NAME_FA}}
+                                td(title="'واحد اندازه گیری به عربی'" filter="{ GDU_NAME_AR: 'text'}" sortable="'GDU_NAME_AR'")
+                                    | {{p.GDU_NAME_AR}}
+                                td
+                                    span(class="text-extra-large margin-bottom-10 block")
+                                        a(tooltip="مشاهده", class="ng-binding", alt="default", data-toggle="modal", data-target=".bs-example-modal-lg", class="model_img img-responsive", ng-click="kala_load(p.GDG_UID);")
+                                            i(class="fa fa-bars fa-fw st_text_green")
+
+
+
+
+
+        div(class="modal fade bs-example-modal-lg", tabindex="-1", role="dialog", aria-labelledby="myLargeModalLabel", aria-hidden="true", style="display: none;")
+            div(class="modal-dialog modal-lg")
+                div(class="modal-content")
+                    div(class="modal-header")
+                        button(type="button", class="close", data-dismiss="modal", style="float : left", aria-hidden="true")
+                            |x
+                        h4(class="modal-title st_title", id="myLargeModalLabel")
+                            |لیست کالاهای گروه
+                    div(class="modal-body")
+                        table(ng-table="tableParams1", class="table st_con")
+                            tbody(ng-repeat="p1 in $data")
+                                tr(ng-class-odd="'odd'", ng-class-even="'even'")
+                                    td(title="'کد کالا'" filter="{ GDS_CODE: 'text'}" sortable="'GDS_CODE'")
+                                        | {{p1.GDS_CODE }}
+                                    td(title="'نام فارسی کالا'" filter="{ GDS_NAME_FA: 'text'}" sortable="'GDS_NAME_FA'")
+                                        | {{p1.GDS_NAME_FA}}
+                                    td(title="'نام عربی کالا'" filter="{ GDS_NAME_AR: 'text'}" sortable="'GDS_NAME_AR'")
+                                        | {{p1.GDS_NAME_AR}}
+                                    td(title="'نسبت'" filter="{ GDS_RATIO_TO_MAIN_UNIT: 'text'}" sortable="'GDS_RATIO_TO_MAIN_UNIT'")
+                                        | {{p1.GDS_RATIO_TO_MAIN_UNIT | number:3}}
+                                    td(title="'واحد اندازه گیری به فارسی'" filter="{ GDU_NAME_FA: 'text'}" sortable="'GDU_NAME_FA'")
+                                        | {{p1.GDU_NAME_FA}}
+                                    td(title="'واحد اندازه گیری به عربی'" filter="{ GDU_NAME_AR: 'text'}" sortable="'GDU_NAME_AR'")
+                                        | {{p1.GDU_NAME_AR}}
+                    div(class="modal-footer")
+                        button(type="button", class="btn btn-info waves-effect", data-dismiss="modal")
+                            |Close
+
+

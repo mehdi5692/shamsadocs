@@ -1,0 +1,137 @@
+body
+    div(ng-controller="planCtrl")
+            div(class="panel panel-primary st_title")
+                .panel-heading
+                    |{{comment}}
+                    div(class="pull-right")
+                        a(href="", data-perform="panel-collapse")
+                            i(class="fa fa-angle-down")
+                div(class="panel-wrapper collapse in", aria-expanded="true")
+                    div(class="panel-body st_con")
+                        div(class="col-lg-12" ng-repeat="p in hot_d")
+                            .row
+                                div(class="col-md-4 col-xs-12")
+                                    .white-box
+                                        div(class="user-bg", id="map", )
+                                            img(src="https://maps.googleapis.com/maps/api/staticmap?center={{p.HOT_LATITUDE}},{{p.HOT_LONGITUDE}},&zoom=15&size=500x250&markers={{p.HOT_LATITUDE}},{{p.HOT_LONGITUDE}}&sensor=false")
+                                        .user-btm-box
+                                            <!-- /.row -->
+                                            hr
+                                            <!-- .row -->
+                                            div(class="row text-center m-t-10")
+                                                div(class="col-md-12")
+                                                    strong نام هتل
+                                                    p
+                                                        | {{p.HOT_NAME}}
+                                            hr
+                                            <!-- /.row -->
+
+                                div(class="col-md-8 col-xs-12")
+                                    <!-- .row -->
+                                    div(class="row text-center m-t-10")
+                                        div(class="col-md-6 b-r")
+                                            strong شناسه هتل
+                                            p
+                                                | {{p.HOT_ID}}
+                                        .col-md-6
+                                            strong منطقه
+                                            p
+                                                | {{p.HOT_DISTRICT}}
+                                    <!-- /.row -->
+                                    hr
+                                    <!-- .row -->
+                                    div(class="row text-center m-t-10")
+                                        div(class="col-md-6 b-r")
+                                            strong ظرفیت به کاروان
+                                            p
+                                                | {{p.HOT_CARAVANS_CAP}}
+                                        .col-md-6
+                                            strong فاصله تا حرم
+                                            p
+                                                | {{p.HOT_HARAM_DISTANCE_TITLE}}
+                                    <!-- /.row -->
+                                    hr
+                                    <!-- .row -->
+                                    div(class="row text-center m-t-10")
+                                        div(class="col-md-12")
+                                            strong نشانی
+                                            p
+                                                | {{p.HOT_ADDRESS}}
+                                    hr
+                                    div(class="row text-center m-t-10")
+                                        div(class="col-md-12")
+                                            | اطلاعات کاروان های ورودی به هتل در تاریخ {{datef | jalaliDate2:'jYYYY/jMM/jDD'}}
+                                            table(ng-table="tableParams4", class="table")
+                                                tbody(ng-repeat="p in $data")
+                                                    tr(ng-class-odd="'odd'", ng-class-even="'even'")
+                                                        td(title="'نام هتل'" sortable="'HOT_NAME'")
+                                                            | {{p.HOT_NAME }}
+                                                        td(title="'تعداد کاروان'" sortable="'COUNT_GROUP'")
+                                                            | {{p.COUNT_GROUP}}
+                                                        td(title="'تعداد شب اقامت'" sortable="'MSPH_NIGHTS'")
+                                                            | {{p.MSPH_NIGHTS}}
+                                                        td(title="'تعداد بزرگسال'" sortable="'ADLS'")
+                                                            | {{p.ADLS}}
+                                                        td(title="'تعداد 2 تا 12 سال'" sortable="'CHDS'")
+                                                            | {{p.CHDS}}
+                                                        td(title="'تعداد زیر 2 سال'" sortable="'INFS'")
+                                                            | {{p.INFS}}
+
+                                    hr
+
+            div(class="panel panel-info" ng-show="sh_panel")
+                .panel-heading
+                    | {{comment2}}
+                .panel-body
+                    table(ng-table="tableParams4", class="table st_con")
+                        tbody(ng-repeat="p in $data")
+                            tr(ng-class-odd="'odd'", ng-class-even="'even'")
+                                td(title="'نام هتل'" filter="{ HOT_NAME: 'text'}" sortable="'HOT_NAME'")
+                                    | {{p.HOT_NAME }}
+                                td(title="'تعداد کاروان'" filter="{ COUNT_GROUP: 'text'}" sortable="'COUNT_GROUP'")
+                                    | {{p.COUNT_GROUP}}
+                                td(title="'تعداد شب اقامت'" filter="{ MSPH_NIGHTS: 'text'}" sortable="'MSPH_NIGHTS'")
+                                    | {{p.MSPH_NIGHTS}}
+                                td(title="'تعداد بزرگسال'" filter="{ ADLS: 'text'}" sortable="'ADLS'")
+                                    | {{p.ADLS}}
+                                td(title="'تعداد 2 تا 12 سال'" filter="{ CHDS: 'text'}" sortable="'CHDS'")
+                                    | {{p.CHDS}}
+                                td(title="'تعداد زیر 2 سال'" filter="{ INFS: 'text'}" sortable="'INFS'")
+                                    | {{p.INFS}}
+
+                    hr
+                    .text-lg-center
+                        button(type="button", class="btn btn-success btn-circle btn-lg", class="ng-binding", alt="default", data-toggle="modal", data-target=".bs-example-modal-lg", ng-click="kala_load(p.GDG_UID);")
+                            i(class="fa fa-plus")
+
+
+
+    div(class="modal fade bs-example-modal-lg", tabindex="-1", role="dialog", aria-labelledby="myLargeModalLabel", aria-hidden="true", style="display: none;")
+        div(class="modal-dialog modal-lg")
+            div(class="modal-content")
+                div(class="modal-header")
+                    button(type="button", class="close", data-dismiss="modal", style="float : left", aria-hidden="true")
+                        | x
+                    h4(class="modal-title st_title", id="myLargeModalLabel")
+                        | لیست کالاهای گروه
+                div(class="modal-body")
+                    table(ng-table="tableParams1", class="table st_con")
+                        tbody(ng-repeat="p1 in $data")
+                            tr(ng-class-odd="'odd'", ng-class-even="'even'")
+                                td(title="'کد کالا'" filter="{ GDS_CODE: 'text'}" sortable="'GDS_CODE'")
+                                    | {{p1.GDS_CODE }}
+                                td(title="'نام فارسی کالا'" filter="{ GDS_NAME_FA: 'text'}" sortable="'GDS_NAME_FA'")
+                                    | {{p1.GDS_NAME_FA}}
+                                td(title="'نام عربی کالا'" filter="{ GDS_NAME_AR: 'text'}" sortable="'GDS_NAME_AR'")
+                                    | {{p1.GDS_NAME_AR}}
+                                td(title="'نسبت'" filter="{ GDS_RATIO_TO_MAIN_UNIT: 'text'}" sortable="'GDS_RATIO_TO_MAIN_UNIT'")
+                                    | {{p1.GDS_RATIO_TO_MAIN_UNIT | number:3}}
+                                td(title="'واحد اندازه گیری به فارسی'" filter="{ GDU_NAME_FA: 'text'}" sortable="'GDU_NAME_FA'")
+                                    | {{p1.GDU_NAME_FA}}
+                                td(title="'واحد اندازه گیری به عربی'" filter="{ GDU_NAME_AR: 'text'}" sortable="'GDU_NAME_AR'")
+                                    | {{p1.GDU_NAME_AR}}
+                div(class="modal-footer")
+                    button(type="button", class="btn btn-info waves-effect", data-dismiss="modal")
+                        | Close
+
+

@@ -1,0 +1,53 @@
+body
+    div(ng-controller="listCtrl")
+        .st_title
+            div(class="panel panel-primary")
+                .panel-heading
+                    |{{comment}}
+                    div(class="pull-right")
+                        a(href="", data-perform="panel-collapse")
+                            i(class="ti-plus")
+                div(class="panel-wrapper collapse in", aria-expanded="true")
+                    .panel-body
+                        .col-lg-12
+                            .col-xs-1
+                                label(for="typ1") شهر :
+                            .col-xs-2
+                                select(class="form-control", name="type1", id="typ1", ng-model="cty")
+                                    option(disabled, selected) نام شهر ( نجف / کربلا )
+                                    option(value="11") نجف
+                                    option(value="12") کربلا
+                            .col-xs-3
+                                label(for="date1") تاریخ ورود به شهر :
+                            .col-xs-2
+                                    input(type="text", class="form-control", id="date1" ng-model="date2", datepicker-popup-persian="{{format}}", name="date1",
+                                    is-open="persianIsOpen1", datepicker-options="dateOptions", date-disabled="disabled(date, mode)", ng-required="true",
+                                    close-text="بسته", clear-text="پاک کردن", current-text="امروز", ng-click="openPersian1($event)", value="{{date2}}")
+
+                            .col-xs-2
+                                button(class="btn btn-success btn-rounded btn-outline", ng-click="cty_list(cty, date2);" data-perform="panel-collapse") جستجو
+
+
+            div(class="panel panel-info" ng-show="sh_panel")
+                .panel-heading
+                    | {{comment2}}
+                .panel-body
+                    table(ng-table="tableParams3", class="table")
+                        tbody(ng-repeat="p in $data")
+                            tr(ng-class-odd="'odd'", ng-class-even="'even'")
+                                td(title="'نام هتل'" filter="{ HOT_NAME: 'text'}" sortable="'HOT_NAME'")
+                                    | {{p.HOT_NAME }}
+                                td(title="'تعداد کاروان'" filter="{ COUNT_GROUP: 'text'}" sortable="'COUNT_GROUP'")
+                                    | {{p.COUNT_GROUP}}
+                                td(title="'تعداد بزرگسال'" filter="{ ADLS: 'text'}" sortable="'ADLS'")
+                                    | {{p.ADLS}}
+                                td(title="'تعداد 2 تا 12 سال'" filter="{ CHDS: 'text'}" sortable="'CHDS'")
+                                    | {{p.CHDS}}
+                                td(title="'تعداد زیر 2 سال'" filter="{ INFS: 'text'}" sortable="'INFS'")
+                                    | {{p.INFS}}
+                                td
+                                    span(class="text-extra-large margin-bottom-10 block")
+                                        a(href="", tooltip="مشاهده", ng-click="good_plan(p.HOT_UID);")
+                                            i(class="fa fa-bars fa-fw st_text_green")
+
+

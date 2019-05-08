@@ -1,0 +1,85 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "angular-persian-date@1.0.1",
+        "scope": null,
+        "escapedName": "angular-persian-date",
+        "name": "angular-persian-date",
+        "rawSpec": "1.0.1",
+        "spec": "1.0.1",
+        "type": "version"
+      },
+      "H:\\test\\node"
+    ]
+  ],
+  "_from": "angular-persian-date@1.0.1",
+  "_id": "angular-persian-date@1.0.1",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/angular-persian-date",
+  "_nodeVersion": "0.10.40",
+  "_npmUser": {
+    "name": "miladhamzelou",
+    "email": "miladhamzelou@gmail.com"
+  },
+  "_npmVersion": "3.3.8",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "angular-persian-date@1.0.1",
+    "scope": null,
+    "escapedName": "angular-persian-date",
+    "name": "angular-persian-date",
+    "rawSpec": "1.0.1",
+    "spec": "1.0.1",
+    "type": "version"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/angular-persian-date/-/angular-persian-date-1.0.1.tgz",
+  "_shasum": "fe03655a941102ac8fd768fee980bf4ec3ee59ca",
+  "_shrinkwrap": null,
+  "_spec": "angular-persian-date@1.0.1",
+  "_where": "H:\\test\\node",
+  "author": {
+    "name": "Milad Hamzelou"
+  },
+  "bugs": {
+    "url": "https://github.com/miladhamzelou/angular-persian-date/issues"
+  },
+  "dependencies": {},
+  "description": "angular-persian-date",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "fe03655a941102ac8fd768fee980bf4ec3ee59ca",
+    "tarball": "https://registry.npmjs.org/angular-persian-date/-/angular-persian-date-1.0.1.tgz"
+  },
+  "gitHead": "089a86cb4afed12736ee5d7c0c7040a4cac72d20",
+  "homepage": "https://github.com/miladhamzelou/angular-persian-date#readme",
+  "keywords": [
+    "angular",
+    "persian",
+    "date"
+  ],
+  "license": "MIT",
+  "main": "angular-persian-date.js",
+  "maintainers": [
+    {
+      "name": "miladhamzelou",
+      "email": "miladhamzelou@gmail.com"
+    }
+  ],
+  "name": "angular-persian-date",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miladhamzelou/angular-persian-date.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.1"
+}
