@@ -42,8 +42,9 @@ app.controller('commCtrl', function($scope,$http,ngTableParams) {
     };
 
     $scope.add_doc = function (num1, num2) {
-
-        $http.post('users/add_doc', {'id' : num1, 'doc_num' : num2, 'doc_date' : $scope.date2 })
+        var docid = numreplace(num1);
+        var docnum = numreplace(num2);
+        $http.post('users/add_doc', {'id' : docid, 'doc_num' : docnum, 'doc_date' : $scope.date2 })
             .success(function (response) {
                 //console.log(response);
                if (response.msg == 'duplicate') {
@@ -58,7 +59,19 @@ app.controller('commCtrl', function($scope,$http,ngTableParams) {
                 document.getElementById('doc_id1').value = '';
         });
     };
-
+    function numreplace (num) {
+        var data = num.replace(/۱/g, "1");
+        var data = num.replace(/۲/g, "2");
+        var data = num.replace(/۳/g, "3");
+        var data = num.replace(/۴/g, "4");
+        var data = num.replace(/۵/g, "5");
+        var data = num.replace(/۶/g, "6");
+        var data = num.replace(/۷/g, "7");
+        var data = num.replace(/۸/g, "8");
+        var data = num.replace(/۹/g, "9");
+        var data = num.replace(/۰/g, "0");
+        return data;
+    };
     $scope.kala_load = function (num1) {
         /*
         $http.post('users/kala_detail', {'kid' : num1})
@@ -206,6 +219,9 @@ app.controller('addsendCtrl', function($rootScope,$scope,$http,ngTableParams,$co
             $http.post('users/add_send_person', {'person_id' : num1, 'send_date' : date1})
                 .success(function (res) {
                     $scope.send_ID = res;
+                    $scope.userid = res.USER_ID;
+                    console.log($scope.send_ID);
+                    console.log($scope.userid);
                     $cookieStore.put('send_ID', res );
                 }).finally(function () {
                     $scope.comment = "ثبت فرد تحویل گیرنده";
@@ -218,9 +234,14 @@ app.controller('addsendCtrl', function($rootScope,$scope,$http,ngTableParams,$co
 
     $scope.add_send_doc = function (num) {
 
-        $http.post('users/add_send_doc', {'send_id' : num, 'doc_id' : document.getElementById('doc_code').value })
+        $http.post('users/add_send_doc', {'send_id' : num, 'doc_id' : document.getElementById('doc_code').value, 'user_id' : $scope.userid})
             .success(function (res) {
                 $scope.send_doc = res;
+                if (res.msg == 'no doc') {
+                    alert("این سند در بایگانی ثبت نشده است .");
+                } else if (res.msg == 'doc exit') {
+                    alert('این سند در اختیار کاربر دیگری می باشد .');
+                }
             }).finally(function () {
             col2(num);
             document.getElementById('doc_code').value = '' ;

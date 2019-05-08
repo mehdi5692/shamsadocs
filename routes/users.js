@@ -72,8 +72,10 @@ router.post('/add_doc', function (req, res, next) {
     console.log(req.session.auth);
     if (req.session.auth) {
         console.log('OK');
-        var doc_id = req.body.id;
-        var doc_num = req.body.doc_num;
+        var doc_id = numreplace(req.body.id);
+        console.log(doc_id);
+        var doc_num = numreplace(req.body.doc_num);
+        console.log(doc_num);
         var doc_date = req.body.doc_date.substr(0, 10);
         var js;
         var js2;
@@ -111,6 +113,19 @@ router.post('/add_doc', function (req, res, next) {
             });
         });
     }
+    function numreplace (num) {
+        num = num.replace(/۱/g, "1");
+        num = num.replace(/۲/g, "2");
+        num = num.replace(/۳/g, "3");
+        num = num.replace(/۴/g, "4");
+        num = num.replace(/۵/g, "5");
+        num = num.replace(/۶/g, "6");
+        num = num.replace(/۷/g, "7");
+        num = num.replace(/۸/g, "8");
+        num = num.replace(/۹/g, "9");
+        num = num.replace(/۰/g, "0");
+        return num;
+    };
 });
 
 router.post('/add_person', function (req, res, next) {
@@ -201,7 +216,7 @@ router.post('/add_send_person', function (req, res, next) {
                             Firebird.attach(fboption, function (err, db) {
                                 if (err)
                                     throw err;
-                                var sql1 = "SELECT TDSP.ID, TDP.FIRSTNAME, TDP.LASTNAME, TDSP.SEND_DATE FROM T_DOC_SEND_PERSON TDSP \n" +
+                                var sql1 = "SELECT TDSP.ID, TDP.FIRSTNAME, TDP.LASTNAME, TDSP.SEND_DATE, TDSP.USER_ID FROM T_DOC_SEND_PERSON TDSP \n" +
                                 "           LEFT JOIN T_DOC_PERSONS TDP ON TDP.ID = TDSP.USER_ID \n" +
                                 "           WHERE TDSP.ID = '" + send_id +"'";
                                 console.log(sql1);
@@ -230,30 +245,83 @@ router.post('/add_send_doc', function (req, res, next) {
     if (req.session.auth) {
         console.log('OK');
         var send_id = req.body.send_id;
-        console.log("send_id:" + send_id);
-        var doc_id = req.body.doc_id;
-        console.log("doc_id:" + doc_id);
+        // console.log("send_id:" + send_id);
+        var user_id = req.body.user_id;
+        // console.log(user_id);
+        var doc_id = numreplace(req.body.doc_id);
+        // console.log("doc_id:" + doc_id);
         var js;
         var js2;
-
         Firebird.attach(fboption, function (err, db) {
             if (err)
                 throw err;
-            var sql1 = "INSERT INTO T_DOC_SEND (SEND_ID, DOC_ID, DOC_ACT)\n" +
-                "            VALUES('" + send_id + "', '" + doc_id + "', '1')";
+            var sql1 = "SELECT * FROM V_DOC_LIST1 WHERE ID = '" + doc_id + "'";
             // console.log(sql1);
             db.query(sql1, function (err, result) {
                 if (err)
                     throw err;
                 console.log(result);
-                js = '{"msg":"sucsses"}';
-                js2 = JSON.parse(js);
-                res.json(js2);
+                if (result[0]) {
+                    if (result[0].DOC_ACT == '0'){
+                        Firebird.attach(fboption, function (err, db) {
+                            if (err)
+                                throw err;
+                            var sql1 = "INSERT INTO T_DOC_SEND (SEND_ID, DOC_ID, DOC_ACT)\n" +
+                                "            VALUES('" + send_id + "', '" + doc_id + "', '1')";
+                            // console.log(sql1);
+                            db.query(sql1, function (err, result) {
+                                if (err)
+                                    throw err;
+                                Firebird.attach(fboption, function (err, db) {
+                                    if (err)
+                                        throw err;
+                                    var sql1 = "UPDATE T_DOC_NAME SET DOC_ACT = '1', DOC_USER_ID = '" + user_id + "' WHERE ID = '" + doc_id + "'";
+                                    // console.log(sql1);
+                                    db.query(sql1, function (err, result) {
+                                        if (err)
+                                            throw err;
+                                        console.log(result);
+                                        js = '{"msg":"sucsses"}';
+                                        js2 = JSON.parse(js);
+                                        res.json(js2);
 
+                                        db.detach();
+                                    });
+                                });
+                                console.log(result);
+                                db.detach();
+                            });
+                        });
+                    } else {
+                        js = '{"msg":"doc exit"}';
+                        js2 = JSON.parse(js);
+                        res.json(js2);
+                    }
+                    console.log(result);
+
+                } else {
+                    js = '{"msg":"no doc"}';
+                    js2 = JSON.parse(js);
+                    res.json(js2);
+                }
                 db.detach();
             });
         });
+
     }
+    function numreplace (num) {
+        num = num.replace(/۱/g, "1");
+        num = num.replace(/۲/g, "2");
+        num = num.replace(/۳/g, "3");
+        num = num.replace(/۴/g, "4");
+        num = num.replace(/۵/g, "5");
+        num = num.replace(/۶/g, "6");
+        num = num.replace(/۷/g, "7");
+        num = num.replace(/۸/g, "8");
+        num = num.replace(/۹/g, "9");
+        num = num.replace(/۰/g, "0");
+        return num;
+    };
 });
 
 router.post('/send_doc_list', function (req, res, next) {
