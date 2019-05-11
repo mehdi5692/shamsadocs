@@ -97,7 +97,7 @@ router.post('/add_doc', function (req, res, next) {
                         if (err)
                             throw err;
                         var sql1 = "INSERT INTO T_DOC_NAME (ID, DOC_NUM, DOC_DATE, DOC_ACT, DOC_USER_ID)\n" +
-                            "            VALUES('" + doc_id + "', '" + doc_num + "', '" + doc_date + "', '0', 'fuDqLqklej')";
+                            "            VALUES('" + doc_id + "', '" + doc_num + "', '" + doc_date + "', 0, 'fuDqLqklej')";
                         console.log(sql1);
                         db.query(sql1, function (err, result) {
                             console.log(result);
@@ -267,7 +267,7 @@ router.post('/add_send_doc', function (req, res, next) {
                             if (err)
                                 throw err;
                             var sql1 = "INSERT INTO T_DOC_SEND (SEND_ID, DOC_ID, DOC_ACT)\n" +
-                                "            VALUES('" + send_id + "', '" + doc_id + "', '1')";
+                                "            VALUES('" + send_id + "', '" + doc_id + "', 1)";
                             // console.log(sql1);
                             db.query(sql1, function (err, result) {
                                 if (err)
@@ -275,7 +275,7 @@ router.post('/add_send_doc', function (req, res, next) {
                                 Firebird.attach(fboption, function (err, db) {
                                     if (err)
                                         throw err;
-                                    var sql1 = "UPDATE T_DOC_NAME SET DOC_ACT = '1', DOC_USER_ID = '" + user_id + "' WHERE ID = '" + doc_id + "'";
+                                    var sql1 = "UPDATE T_DOC_NAME SET DOC_ACT = 1, DOC_USER_ID = '" + user_id + "' WHERE ID = '" + doc_id + "'";
                                     // console.log(sql1);
                                     db.query(sql1, function (err, result) {
                                         if (err)
