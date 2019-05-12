@@ -1,9 +1,22 @@
-app.controller('mainCtrl', function($scope) {
+app.controller('mainCtrl', function($scope,$http) {
     $scope.s_signup= true;
     $scope.s_login= true;
     $scope.gtitle = false;
     $scope.doc_id = null;
     $scope.doc_num = "545785757";
+
+    con1();
+
+    function con1 () {
+        $http.get('users/dashbord')
+            .success(function (response) {
+                $scope.person_count = response.person;
+                $scope.doc_count = response.docs;
+                $scope.send_count = response.send;
+                $scope.recive_count = response.recive;
+                var data = response;
+        });
+    };
 });
 
 app.controller('commCtrl', function($scope,$http,ngTableParams) {

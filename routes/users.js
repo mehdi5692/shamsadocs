@@ -36,6 +36,73 @@ router.get('/page8', function (req, res, next) {
 });
 
 ////////////////////////////////////////////////////
+router.get('/dashbord', function (req, res, next) {
+    console.log(req.session.auth);
+    if (req.session.auth) {
+        console.log('OK');
+        var person = null;
+        var docs = null;
+        var send = null;
+        var recive = null;
+        var js;
+        var js2;
+
+        Firebird.attach(fboption, function (err, db) {
+            if (err)
+                throw err;
+            var sql1 = "SELECT COUNT(ID)AS COUNT_PERSON  FROM T_DOC_PERSONS";
+            db.query(sql1, function (err, result) {
+                if(err)
+                    throw err;
+                person = result[0].COUNT_PERSON;
+                console.log(result[0]);
+                Firebird.attach(fboption, function (err, db) {
+                    if (err)
+                        throw err;
+                    var sql1 = "SELECT COUNT(ID)AS COUNT_DOCS  FROM T_DOC_NAME";
+                    db.query(sql1, function (err, result) {
+                        if(err)
+                            throw err;
+                        docs = result[0].COUNT_DOCS;
+
+                        Firebird.attach(fboption, function (err, db) {
+                            if (err)
+                                throw err;
+                            var sql1 = "SELECT COUNT(DOC_ID)AS COUNT_SEND  FROM T_DOC_SEND";
+                            db.query(sql1, function (err, result) {
+                                if(err)
+                                    throw err;
+                                send = result[0].COUNT_SEND;
+
+                                Firebird.attach(fboption, function (err, db) {
+                                    if (err)
+                                        throw err;
+                                    var sql1 = "SELECT COUNT(DOC_ID)AS COUNT_RECIVE FROM T_DOC_RECIVE";
+                                    db.query(sql1, function (err, result) {
+                                        if(err)
+                                            throw err;
+                                        recive = result[0].COUNT_RECIVE;
+                                        js = '{"person":"' + person + '", "docs":"' + docs + '", "send":"' + send +'", "recive":"' + recive + '"}';
+                                        js2 = JSON.parse(js);
+                                        res.json(js2);
+                                        db.detach();
+                                    });
+                                });
+
+                                db.detach();
+                            });
+                        });
+
+                        db.detach();
+                    });
+                });
+                db.detach();
+            });
+        });
+    }
+});
+
+
 router.get('/docs', function (req, res, next) {
     console.log(req.session.auth);
     if (req.session.auth) {

@@ -1,9 +1,52 @@
 body(style="width : 100%")
-        .st_titr
-            div(class="panel panel-danger" style="width : 100%")
-                .panel-heading
-                    | میز کار
-                .panel-body
-                    |اطلاعات ناقص می باشد .
+        div(ng-controller="mainCtrl")
+            div(class="row st_title" dir="ltr")
+                div(class="col-md-3 col-sm-6")
+                    .white-box
+                        .r-icon-stats
+                            i(class="ti-user bg-megna")
+                            .bodystate
+                                h4(class="st_titr_nu")
+                                    | {{person_count}}
+                                span(class="text-muted")
+                                    | تعداد افراد ثبت شده
+
+                div(class="col-md-3 col-sm-6")
+                    .white-box
+                        .r-icon-stats
+                            i(class="ti-files bg-info")
+                            .bodystate
+                                h4(class="st_titr_nu")
+                                    | {{doc_count}}
+                                span(class="text-muted")
+                                    | تعداد اسناد ثبت شده
+
+                div(class="col-md-3 col-sm-6")
+                    .white-box
+                        .r-icon-stats
+                            i(class="ti-export bg-success")
+                            .bodystate
+                                h4(class="st_titr_nu")
+                                    | {{send_count}}
+                                span(class="text-muted")
+                                    | تعداد ااسناد تحویل داده شده
+
+                div(class="col-md-3 col-sm-6")
+                    .white-box
+                        .r-icon-stats
+                            i(class="ti-import bg-inverse")
+                            .bodystate
+                                h4(class="st_titr_nu")
+                                    | {{recive_count}}
+                                span(class="text-muted")
+                                    | تعداد اسناد تحویل گرفته شده
+
+
+            div(class="row st_titr")
+                div(class="panel panel-success" style="width : 100%")
+                    .panel-heading
+                        | میز کار
+                    .panel-body
+                        |مشکل یا اخطاری در سیستم وجود ندارد .
 
 
