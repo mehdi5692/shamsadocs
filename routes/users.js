@@ -350,6 +350,122 @@ router.post('/send_doc_list', function (req, res, next) {
     }
 });
 
+router.post('/add_doc_recive', function (req, res, next) {
+    console.log(req.session.auth);
+    if (req.session.auth) {
+        console.log('OK');
+        var doc_id = numreplace(req.body.id);
+        console.log(doc_id);
+        var recive_date = req.body.recive_date.substr(0, 10);
+        var js;
+        var js2;
+        Firebird.attach(fboption, function (err, db) {
+            if (err)
+                throw err;
+            var sql1 = "SELECT * FROM T_DOC_NAME WHERE ID = '" + doc_id + "'";
+            // console.log(sql1);
+            db.query(sql1, function (err, result) {
+                if (err)
+                    throw err;
+                console.log(result);
+                if (result[0]) {
+                    if (result[0].DOC_ACT == 1){
+                        Firebird.attach(fboption, function (err, db) {
+                            if (err)
+                                throw err;
+                            var sql1 = "INSERT INTO T_DOC_RECIVE (USER_ID, DOC_ID, RECIVE_DATA)\n" +
+                                "            VALUES('" + result[0].DOC_USER_ID + "', '" + doc_id + "', '" + recive_date + "')";
+                            // console.log(sql1);
+                            db.query(sql1, function (err, result) {
+                                if (err)
+                                    throw err;
+                                Firebird.attach(fboption, function (err, db) {
+                                    if (err)
+                                        throw err;
+                                    var sql1 = "UPDATE T_DOC_NAME SET DOC_ACT = 0, DOC_USER_ID = 'fuDqLqklej' WHERE ID = '" + doc_id + "'";
+                                    // console.log(sql1);
+                                    db.query(sql1, function (err, result) {
+                                        if (err)
+                                            throw err;
+                                        console.log(result);
+                                        Firebird.attach(fboption, function (err, db) {
+                                            if (err)
+                                                throw err;
+                                            var sql1 = "UPDATE T_DOC_SEND SET DOC_ACT = 0 WHERE DOC_ID = '" + doc_id + "' AND DOC_ACT = 1";
+                                            // console.log(sql1);
+                                            db.query(sql1, function (err, result) {
+                                                if (err)
+                                                    throw err;
+                                                console.log(result);
+                                                js = '{"msg":"sucsses"}';
+                                                js2 = JSON.parse(js);
+                                                res.json(js2);
+
+                                                db.detach();
+                                            });
+                                        });
+
+                                        db.detach();
+                                    });
+                                });
+                                console.log(result);
+                                db.detach();
+                            });
+                        });
+                    } else {
+                        js = '{"msg":"doc exit"}';
+                        js2 = JSON.parse(js);
+                        res.json(js2);
+                    }
+                    console.log(result);
+
+                } else {
+                    js = '{"msg":"no doc"}';
+                    js2 = JSON.parse(js);
+                    res.json(js2);
+                }
+                db.detach();
+            });
+        });
+    }
+    function numreplace (num) {
+        num = num.replace(/۱/g, "1");
+        num = num.replace(/۲/g, "2");
+        num = num.replace(/۳/g, "3");
+        num = num.replace(/۴/g, "4");
+        num = num.replace(/۵/g, "5");
+        num = num.replace(/۶/g, "6");
+        num = num.replace(/۷/g, "7");
+        num = num.replace(/۸/g, "8");
+        num = num.replace(/۹/g, "9");
+        num = num.replace(/۰/g, "0");
+        return num;
+    };
+});
+
+router.get('/recives', function (req, res, next) {
+    console.log(req.session.auth);
+    if (req.session.auth) {
+        console.log('OK');
+
+        Firebird.attach(fboption, function (err, db) {
+            if (err)
+                throw err;
+            var sql1 = "SELECT * FROM V_DOC_RECIVE_LIST ";
+            // console.log(sql1);
+            db.query(sql1, function (err, result) {
+                if (err)
+                    throw err;
+                if (result) {
+                    console.log(result);
+                    res.json(result);
+                }
+                db.detach();
+            });
+        });
+    }
+});
+
 router.post('/kala_detail', function (req, res, next) {
     console.log(req.session.auth);
     if (req.session.auth) {

@@ -202,11 +202,6 @@ app.controller('addsendCtrl', function($rootScope,$scope,$http,ngTableParams,$co
 
 
 ///////////////////////////////////////////////////////////end datepicker-popup-persian config ///////////////////////////////////////////////////////////////////////
-    $scope.test = function () {
-        alert("ksdfhsdf");
-        $scope.doc_code = "kfsdjfklsdjflksdjflkjsdlkfjsdlkfjlsdkj";
-        document.getElementById('doc_code').value = '' ;
-    };
 
     $scope.add_send = function (num1, num2) {
         var date1 = (num2.getMonth()+1).toString() + "/" + num2.getDate().toString() + "/" + num2.getFullYear().toString();
@@ -308,6 +303,98 @@ app.controller('addsendCtrl', function($rootScope,$scope,$http,ngTableParams,$co
 
 });
 
+app.controller('reciveCtrl', function($scope,$http,ngTableParams) {
+    $scope.comment = 'لیست اسناد تحویل شده.';
+    $scope.doc_id = null;
+    $scope.doc_num = null;
+    $scope.date2 = new Date();
+    $scope.doc_num_chenge = function () {
+        $scope.array = $scope.doc_id.split("-");
+        $scope.doc_num = $scope.array[0];
+    };
+
+    con1();
+
+    function con1 () {
+        $http.get('users/recives')
+            .success(function (response) {
+                $scope.recives_data = response;
+                var data = response;
+
+                $scope.tableParams = new ngTableParams({
+                    sorting: {'ID': 'acs'},
+                    filter: {},
+                    page: 1,
+                    total: data.length,
+                    count: 10
+                }, {dataset: data});
+                function getData($defer, params) {
+                    var orderData = params.sorting ? $filter('orderBy')(data, params.orderBy()) : data;
+                    $defer.resolve(orderData);
+                };
+
+            }).finally(function () {
+            $scope.tableParams.reload();
+        });
+    };
+
+    $scope.add_doc = function (num1, num2) {
+        var docid = num1;
+        var date1 = (num2.getMonth()+1).toString() + "/" + num2.getDate().toString() + "/" + num2.getFullYear().toString();
+        $http.post('users/add_doc_recive', {'id' : docid, 'recive_date' : date1})
+            .success(function (response) {
+                //console.log(response);
+                if (response.msg == 'duplicate') {
+                    alert('سند تکراری .');
+                } else if (response.msg == 'sucsses'){
+                    alert('سند ثبت گردید .');
+                    con1();
+                } else {
+                    alert('اشکال در سیستم .');
+                }
+            }).finally(function () {
+            document.getElementById('doc_id1').value = '';
+        });
+    };
+
+
+    ////////////////////////////////////////////////// datepicker-popup-persian config /////////////////////////////////////////////////
+    $scope.today = function () {
+
+        $scope.date2 = new Date();
+
+    };
+    $scope.today();
+
+    $scope.clear = function () {
+        $scope.date2 = null;
+    };
+
+// Disable weekend selection $scope.disabled = function(date, mode) { return ( mode === 'day' &&date.getDay() === 5 ); };
+
+    $scope.toggleMin = function () {
+        $scope.minDate = $scope.minDate ? null : new Date();
+    };
+    $scope.toggleMin();
+
+    $scope.openPersian1 = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.persianIsOpen1 = true;
+    };
+
+    $scope.dateOptions = {formatYear: 'yyyy', startingDay: 6};
+
+    $scope.initDate = new Date('2016-12-20');
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[0];
+
+
+///////////////////////////////////////////////////////////end datepicker-popup-persian config ///////////////////////////////////////////////////////////////////////
+
+
+});
 
 app.controller('listCtrl', function($rootScope,$scope,$http,ngTableParams,$cookieStore,$state) {
 

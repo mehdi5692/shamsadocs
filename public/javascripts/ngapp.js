@@ -33,11 +33,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             templateUrl: 'users/page8',
             /*controller: commCtrl*/
         })
-        .state('recive', {
-            url: "/recive",
-            templateUrl: 'users/page5',
-            /*controller: commCtrl*/
-        })
     ;
 
 }]);
