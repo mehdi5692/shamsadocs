@@ -316,6 +316,52 @@ app.controller('addsendCtrl', function($rootScope,$scope,$http,ngTableParams,$co
 
 });
 
+app.controller('sendCtrl', function($scope,$http,ngTableParams) {
+    $scope.comment = 'فهرست درخواست اسناد ثبت شده .';
+    $scope.doc_id = null;
+    $scope.doc_num = null;
+
+    con1();
+
+    function con1 () {
+        $http.get('users/send_list')
+            .success(function (response) {
+                $scope.send_list_data = response;
+                var data = response;
+
+                $scope.tableParams = new ngTableParams({
+                    sorting: {'SEND_DATE': 'acs'},
+                    filter: {},
+                    page: 1,
+                    total: data.length,
+                    count: 10
+                }, {dataset: data});
+                function getData($defer, params) {
+                    var orderData = params.sorting ? $filter('orderBy')(data, params.orderBy()) : data;
+                    $defer.resolve(orderData);
+                };
+
+            }).finally(function () {
+            $scope.tableParams.reload();
+        });
+    }
+
+
+
+    $scope.add_person = function (num1, num2, num3) {
+        $http.post('users/add_person', {'person_name': num1, 'person_famili': num2, 'person_comment': num3})
+            .success(function (response) {
+                //console.log(response);
+                if (response.msg == 'sucsses') {
+                    alert('سند ثبت گردید .');
+                    con1();
+                } else {
+                    alert('اشکال در ثبت اطلاعات');
+                }
+            });
+    };
+});
+
 app.controller('reciveCtrl', function($scope,$http,ngTableParams) {
     $scope.comment = 'لیست اسناد تحویل شده.';
     $scope.doc_id = null;
@@ -525,7 +571,6 @@ app.filter('conv1', function () {
         return String.fromCharCode.apply(null, new Uint8Array(inputDate));
     }
 });
-
 app.filter('act', function () {
     return function (inputDate) {
         var data1 = '';
@@ -542,7 +587,6 @@ app.filter('act', function () {
         return data1;
     }
 });
-
 app.filter('jalaliDate', function () {
     return function (inputDate, format) {
         var date = moment(inputDate);

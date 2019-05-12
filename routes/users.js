@@ -23,7 +23,7 @@ router.get('/page3', function (req, res, next) {
     res.render('pages/page6', {title: 'Docs'});
 });
 router.get('/page4', function (req, res, next) {
-    res.render('pages/page4', {title: 'Docs'});
+    res.render('pages/page9', {title: 'Docs'});
 });
 router.get('/page5', function (req, res, next) {
     res.render('pages/page5', {title: 'Docs'});
@@ -411,6 +411,22 @@ router.post('/send_doc_list', function (req, res, next) {
                     console.log(result);
                     res.json(result);
                 }
+                db.detach();
+            });
+        });
+    }
+});
+
+router.get('/send_list', function (req, res, next) {
+    console.log(req.session.auth);
+    if (req.session.auth) {
+        console.log('OK');
+        Firebird.attach(fboption, function (err, db) {
+            if (err)
+                throw err;
+            var sql1 = "SELECT ID, USER_ID, SEND_DATE, DOC_ACT1, DOC_ACTED, FIRST_NAME|| ' ' ||LAST_NAME AS FULLNAME  FROM V_DOC_SEND_LIST";
+            db.query(sql1, function (err, result) {
+                res.json(result);
                 db.detach();
             });
         });
