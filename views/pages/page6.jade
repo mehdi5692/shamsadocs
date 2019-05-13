@@ -15,8 +15,6 @@ body
                     table(ng-table="tableParams", class="table")
                         tbody(ng-repeat="p in $data")
                             tr(ng-class-odd="'odd'", ng-class-even="'even'")
-                                td(title="'شناسه'" filter="{ ID: 'text'}" sortable="'ID'")
-                                    | {{p.ID }}
                                 td(title="'نام'" filter="{ FIRSTNAME: 'text'}" sortable="'FIRSTNAME'")
                                     |{{p.FIRSTNAME }}
                                 td(title="'نام خانوادگی'" filter="{ LASTNAME: 'text'}" sortable="'LASTNAME'")

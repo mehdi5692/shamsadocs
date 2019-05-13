@@ -148,7 +148,7 @@ app.controller('personCtrl', function($scope,$http,ngTableParams) {
                 var data = response;
 
                 $scope.tableParams = new ngTableParams({
-                    sorting: {'ID': 'acs'},
+                    sorting: {'LASTNAME': 'acs'},
                     filter: {},
                     page: 1,
                     total: data.length,
