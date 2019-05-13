@@ -1,7 +1,11 @@
 body
     div(ng-controller="personCtrl")
         .st_title
-            div(class="panel panel-danger")
+            div(class="alert {{alert_style}}" ng-show="alert_show")
+                button(type="button" class="close pull-left" data-dismiss="alert" aria-hidden="true")
+                    i(class="fa fa-times")
+                | {{alert_comm}}
+            div(class="panel {{comment_style}}")
                 .panel-heading
                     |{{comment}}
                     .pull-right

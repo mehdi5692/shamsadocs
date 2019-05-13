@@ -1,4 +1,6 @@
 app.controller('mainCtrl', function($scope,$http) {
+    $scope.comment = 'میزکار';
+    $scope.comment_style = 'panel-success';
     $scope.s_signup= true;
     $scope.s_login= true;
     $scope.gtitle = false;
@@ -21,6 +23,8 @@ app.controller('mainCtrl', function($scope,$http) {
 
 app.controller('commCtrl', function($scope,$http,ngTableParams) {
     $scope.comment = 'لیست اسناد ثبت شده.';
+    $scope.comment_style = 'panel-info';
+    $scope.alert_show = false;
     $scope.doc_id = null;
     $scope.doc_num = null;
     $scope.date2 = new Date();
@@ -61,12 +65,28 @@ app.controller('commCtrl', function($scope,$http,ngTableParams) {
             .success(function (response) {
                 //console.log(response);
                if (response.msg == 'duplicate') {
-                   alert('سند تکراری .');
+                   // $scope.comment = 'سند ' + docid + ' تکراری می باشد و قبلا در سیستم ثبت شده است .';
+                   // $scope.comment_style = 'panel-danger';
+                   $scope.alert_show = true;
+                   $scope.alert_comm = 'سند ' + docid + ' تکراری می باشد و قبلا در سیستم ثبت شده است .';
+                   $scope.alert_style = 'alert-warning';
+
+                   //alert('سند تکراری .');
                } else if (response.msg == 'sucsses'){
-                   alert('سند ثبت گردید .');
+                   // $scope.comment = 'سند ' + docid + ' ثبت گردید .';
+                   // $scope.comment_style = 'panel-success';
+                   $scope.alert_show = true;
+                   $scope.alert_comm = 'سند ' + docid + ' ثبت گردید .';
+                   $scope.alert_style = 'alert-success';
+                   //alert('سند ثبت گردید .');
                    con1();
                } else {
-                   alert('اشکال در سیستم .');
+                   //$scope.comment = 'در روند ثبت سند ' + docid + 'مشکلی پیش آمده است . لطفا دوباره سند را ثبت نمایید .';
+                   //$scope.comment_style = 'panel-inverse';
+                   $scope.alert_show = true;
+                   $scope.alert_comm = 'در روند ثبت سند ' + docid + 'مشکلی پیش آمده است . لطفا دوباره سند را ثبت نمایید .';
+                   $scope.alert_style = 'alert-danger';
+                   //alert('اشکال در سیستم .');
                }
             }).finally(function () {
                 document.getElementById('doc_id1').value = '';
@@ -114,6 +134,8 @@ app.controller('commCtrl', function($scope,$http,ngTableParams) {
 
 app.controller('personCtrl', function($scope,$http,ngTableParams) {
     $scope.comment = 'لیست افراد مرتبط';
+    $scope.comment_style = 'panel-info';
+    $scope.alert_show = false;
     $scope.doc_id = null;
     $scope.doc_num = null;
 
@@ -145,14 +167,21 @@ app.controller('personCtrl', function($scope,$http,ngTableParams) {
 
 
     $scope.add_person = function (num1, num2, num3) {
+
         $http.post('users/add_person', {'person_name': num1, 'person_famili': num2, 'person_comment': num3})
             .success(function (response) {
                 //console.log(response);
                 if (response.msg == 'sucsses') {
-                    alert('سند ثبت گردید .');
+                    $scope.alert_show = true;
+                    $scope.alert_comm = num1 + ' ' + num2 + ' ثبت گردید .';
+                    $scope.alert_style = 'alert-success';
+                    //alert('سند ثبت گردید .');
                     con1();
                 } else {
-                    alert('اشکال در ثبت اطلاعات');
+                    $scope.alert_show = true;
+                    $scope.alert_comm = num1 + ' ' + num2 + ' ثبت نگردید .';
+                    $scope.alert_style = 'alert-warning';
+                    //alert('اشکال در ثبت اطلاعات');
                 }
             });
     };
@@ -241,14 +270,28 @@ app.controller('addsendCtrl', function($rootScope,$scope,$http,ngTableParams,$co
     };
 
     $scope.add_send_doc = function (num) {
-
-        $http.post('users/add_send_doc', {'send_id' : num, 'doc_id' : document.getElementById('doc_code').value, 'user_id' : $scope.userid})
+        var num2 = document.getElementById('doc_code').value;
+        $http.post('users/add_send_doc', {'send_id' : num, 'doc_id' : num2, 'user_id' : $scope.userid})
             .success(function (res) {
                 $scope.send_doc = res;
                 if (res.msg == 'no doc') {
-                    alert("این سند در بایگانی ثبت نشده است .");
+                    $scope.alert_show = true;
+                    $scope.alert_comm = 'سند ' + num2 + ' در بایگانی ثبت نشده است ';
+                    $scope.alert_style = 'alert-warning';
+                    // alert("این سند در بایگانی ثبت نشده است .");
                 } else if (res.msg == 'doc exit') {
-                    alert('این سند در اختیار کاربر دیگری می باشد .');
+                    $scope.alert_show = true;
+                    $scope.alert_comm = 'سند ' + num2 + ' در بایگانی نبوده و در اختیار فرد دیگری می باشد .';
+                    $scope.alert_style = 'alert-danger';
+                    // alert('این سند در اختیار کاربر دیگری می باشد .');
+                } else if (res.msg == 'sucsses') {
+                    $scope.alert_show = true;
+                    $scope.alert_comm = 'سند ' + num2 + ' ثبت گردید .';
+                    $scope.alert_style = 'alert-success';
+                } else {
+                    $scope.alert_show = true;
+                    $scope.alert_comm = 'در مراحل ثبت سند ' + num2 + ' مشکلی پیش آمده است . لطفا دوباره ثبت نمایید .';
+                    $scope.alert_style = 'alert-danger';
                 }
             }).finally(function () {
             col2(num);
@@ -318,6 +361,7 @@ app.controller('addsendCtrl', function($rootScope,$scope,$http,ngTableParams,$co
 
 app.controller('sendCtrl', function($scope,$http,ngTableParams) {
     $scope.comment = 'فهرست درخواست اسناد ثبت شده .';
+    $scope.comment_style = 'panel-inverse';
     $scope.doc_id = null;
     $scope.doc_num = null;
 
@@ -364,6 +408,8 @@ app.controller('sendCtrl', function($scope,$http,ngTableParams) {
 
 app.controller('reciveCtrl', function($scope,$http,ngTableParams) {
     $scope.comment = 'لیست اسناد تحویل شده.';
+    $scope.comment_style = 'panel-info';
+    $scope.alert_show = false;
     $scope.doc_id = null;
     $scope.doc_num = null;
     $scope.date2 = new Date();
@@ -403,13 +449,28 @@ app.controller('reciveCtrl', function($scope,$http,ngTableParams) {
         $http.post('users/add_doc_recive', {'id' : docid, 'recive_date' : date1})
             .success(function (response) {
                 //console.log(response);
-                if (response.msg == 'duplicate') {
-                    alert('سند تکراری .');
+                if (response.msg == 'doc exit') {
+                    // $scope.comment = 'سند ' + docid + ' داخل بایگانی میباشد و تحویل هیچ فردی نبوده است .';
+                    // $scope.comment_style = 'panel-danger';
+                    $scope.alert_show = true;
+                    $scope.alert_comm = 'سند ' + docid + ' داخل بایگانی میباشد و تحویل هیچ فردی نبوده است .';
+                    $scope.alert_style = 'alert-warning';
+                    //alert('سند تکراری .');
                 } else if (response.msg == 'sucsses'){
-                    alert('سند ثبت گردید .');
+                    // $scope.comment = 'سند ' + docid + ' ثبت گردید .';
+                    // $scope.comment_style = 'panel-success';
+                    $scope.alert_show = true;
+                    $scope.alert_comm = 'سند ' + docid + ' ثبت گردید .';
+                    $scope.alert_style = 'alert-success';
+                    //alert('سند ثبت گردید .');
                     con1();
                 } else {
-                    alert('اشکال در سیستم .');
+                    // $scope.comment = 'در روند ثبت سند ' + docid + 'مشکلی پیش آمده است . لطفا دوباره سند را ثبت نمایید .';
+                    // $scope.comment_style = 'panel-inverse';
+                    $scope.alert_show = true;
+                    $scope.alert_comm = 'در روند ثبت سند ' + docid + 'مشکلی پیش آمده است . لطفا دوباره سند را ثبت نمایید .';
+                    $scope.alert_style = 'alert-danger';
+                    //alert('اشکال در سیستم .');
                 }
             }).finally(function () {
             document.getElementById('doc_id1').value = '';

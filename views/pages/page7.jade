@@ -1,5 +1,9 @@
 body
     div(ng-controller="addsendCtrl")
+        div(class="alert {{alert_style}}" ng-show="alert_show")
+            button(type="button" class="close pull-left" data-dismiss="alert" aria-hidden="true")
+                i(class="fa fa-times")
+            | {{alert_comm}}
         div(class="panel {{comment_style}} st_title" ng-hide="sh_panel")
             .panel-heading
                 | {{comment}}

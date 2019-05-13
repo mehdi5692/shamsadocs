@@ -1,6 +1,10 @@
 body
     div(ng-controller="commCtrl")
-        div(class="panel panel-danger")
+        div(class="alert {{alert_style}}" ng-show="alert_show")
+            button(type="button" class="close pull-left" data-dismiss="alert" aria-hidden="true")
+                i(class="fa fa-times")
+            | {{alert_comm}}
+        div(class="panel {{comment_style}}")
             div(class="panel-heading st_title")
                 | {{comment}}
                 //.pull-right
