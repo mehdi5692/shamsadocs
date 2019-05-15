@@ -141,6 +141,8 @@ router.post('/add_doc', function (req, res, next) {
         console.log('OK');
         var doc_id = numreplace(req.body.id);
         console.log(doc_id);
+        var arrey = doc_id.split("-");
+        var doc_year = arrey[1];
         var doc_num = numreplace(req.body.doc_num);
         console.log(doc_num);
         var doc_date = req.body.doc_date.substr(0, 10);
@@ -163,8 +165,8 @@ router.post('/add_doc', function (req, res, next) {
                     Firebird.attach(fboption, function (err, db) {
                         if (err)
                             throw err;
-                        var sql1 = "INSERT INTO T_DOC_NAME (ID, DOC_NUM, DOC_DATE, DOC_ACT, DOC_USER_ID)\n" +
-                            "            VALUES('" + doc_id + "', '" + doc_num + "', '" + doc_date + "', 0, 'fuDqLqklej')";
+                        var sql1 = "INSERT INTO T_DOC_NAME (ID, DOC_NUM, DOC_DATE, DOC_ACT, DOC_USER_ID, DOC_YEARS)\n" +
+                            "            VALUES('" + doc_id + "', '" + doc_num + "', '" + doc_date + "', 0, 'fuDqLqklej', '" + doc_year + "')";
                         console.log(sql1);
                         db.query(sql1, function (err, result) {
                             console.log(result);
