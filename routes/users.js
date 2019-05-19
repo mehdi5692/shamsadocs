@@ -148,39 +148,47 @@ router.post('/add_doc', function (req, res, next) {
         var doc_date = req.body.doc_date.substr(0, 10);
         var js;
         var js2;
-        Firebird.attach(fboption, function (err, db) {
-            if (err)
-                throw err;
-            var sql1 = "SELECT * FROM T_DOC_NAME WHERE ID = '" + doc_id + "'";
-            //console.log(sql1);
-            db.query(sql1, function (err, result) {
-                //console.log(result[0]);
-                if (result[0]) {
-                    console.log("true");
-                    js = '{"msg":"duplicate"}';
-                    js2 = JSON.parse(js);
-                    res.json(js2);
-                } else {
-                    console.log("false");
-                    Firebird.attach(fboption, function (err, db) {
-                        if (err)
-                            throw err;
-                        var sql1 = "INSERT INTO T_DOC_NAME (ID, DOC_NUM, DOC_DATE, DOC_ACT, DOC_USER_ID, DOC_YEARS)\n" +
-                            "            VALUES('" + doc_id + "', '" + doc_num + "', '" + doc_date + "', 0, 'fuDqLqklej', '" + doc_year + "')";
-                        console.log(sql1);
-                        db.query(sql1, function (err, result) {
-                            console.log(result);
-                            js = '{"msg":"sucsses"}';
-                            js2 = JSON.parse(js);
-                            res.json(js2);
-                            db.detach();
+        if (doc_year.length == 4){
+            Firebird.attach(fboption, function (err, db) {
+                if (err)
+                    throw err;
+                var sql1 = "SELECT * FROM T_DOC_NAME WHERE ID = '" + doc_id + "'";
+                //console.log(sql1);
+                db.query(sql1, function (err, result) {
+                    //console.log(result[0]);
+                    if (result[0]) {
+                        console.log("true");
+                        js = '{"msg":"duplicate"}';
+                        js2 = JSON.parse(js);
+                        res.json(js2);
+                    } else {
+                        console.log("false");
+                        Firebird.attach(fboption, function (err, db) {
+                            if (err)
+                                throw err;
+                            var sql1 = "INSERT INTO T_DOC_NAME (ID, DOC_NUM, DOC_DATE, DOC_ACT, DOC_USER_ID, DOC_YEARS)\n" +
+                                "            VALUES('" + doc_id + "', '" + doc_num + "', '" + doc_date + "', 0, 'fuDqLqklej', '" + doc_year + "')";
+                            console.log(sql1);
+                            db.query(sql1, function (err, result) {
+                                console.log(result);
+                                js = '{"msg":"sucsses"}';
+                                js2 = JSON.parse(js);
+                                res.json(js2);
+                                db.detach();
+                            });
                         });
-                    });
-                }
-                console.log("none");
-                db.detach();
+                    }
+                    // console.log("none");
+                    db.detach();
+                });
             });
-        });
+        } else {
+            console.log("none");
+            js = '{"msg":"exit docs"}';
+            js2 = JSON.parse(js);
+            res.json(js2);
+        }
+
     }
     function numreplace (num) {
         num = num.replace(/۱/g, "1");
